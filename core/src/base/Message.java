@@ -14,19 +14,19 @@ public class Message implements Comparable<Message> {
 
 	private final String TYPE_KEY = "type";
 	private final String SENDER_KEY = "sender";
-	private final String MESSAGE_KEY = "message";
 	private final String DATE_KEY = "date";
+	private final String BODY_KEY = "body";
 
 	private MessageType type;
 	private String sender;
-	private String message;
 	private Date date;
+	private String body;
 
 	public Message() {
 		type = MessageType.NULL;
 		sender = "";
-		message = "";
 		date = new Date();
+		body = "";
 	}
 
 	public MessageType getType() {
@@ -49,12 +49,12 @@ public class Message implements Comparable<Message> {
 		this.sender = sender;
 	}
 
-	public String getMessage() {
-		return message;
+	public String getBody() {
+		return body;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setBody(String body) {
+		this.body = body;
 	}
 
 	public Date getMessageDate() {
@@ -76,8 +76,8 @@ public class Message implements Comparable<Message> {
 
 	public JSONObject toJSON() {
 		JSONObject outgoingMsg = new JSONObject();
+		outgoingMsg.put(BODY_KEY, body);
 		outgoingMsg.put(DATE_KEY, date.getTime());
-		outgoingMsg.put(MESSAGE_KEY, message);
 		outgoingMsg.put(SENDER_KEY, sender);
 		outgoingMsg.put(TYPE_KEY, type.name());
 		return outgoingMsg;
@@ -86,7 +86,7 @@ public class Message implements Comparable<Message> {
 	public void toMessage(JSONObject jsonMsg) {
 		type = MessageType.valueOf(jsonMsg.optString(TYPE_KEY, MessageType.NULL.name()));
 		sender = jsonMsg.optString(SENDER_KEY);
-		message = jsonMsg.optString(MESSAGE_KEY);
+		body = jsonMsg.optString(BODY_KEY);
 		date = new Date(jsonMsg.optLong(DATE_KEY, System.currentTimeMillis()));
 	}
 
@@ -103,7 +103,7 @@ public class Message implements Comparable<Message> {
 		}
 
 		return ((Message) obj).getSender() == this.sender && ((Message) obj).getType() == this.type
-				&& ((Message) obj).getMessage() == this.message && ((Message) obj).getMessageDate() == this.date;
+				&& ((Message) obj).getBody() == this.body && ((Message) obj).getMessageDate() == this.date;
 	}
 
 	@Override

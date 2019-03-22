@@ -11,7 +11,6 @@ public class Mainclass extends ApplicationAdapter {
 	@Override
 	public void create() {
 		mGm = new GameMain();
-
 	}
 
 	@Override

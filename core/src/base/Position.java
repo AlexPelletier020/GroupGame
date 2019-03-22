@@ -26,8 +26,8 @@ public class Position {
 	}
 
 	public Position(float x, float y, Directions direction) {
-		this.x = 0;
-		this.y = 0;
+		this.x = x;
+		this.y = y;
 		this.direction = direction;
 		this.speed = 0;
 	}
@@ -95,7 +95,6 @@ public class Position {
 
 	public JSONObject toJSON() {
 		JSONObject outgoingPosition = new JSONObject();
-
 		outgoingPosition.put(KEY_X, this.x);
 		outgoingPosition.put(KEY_Y, this.y);
 		outgoingPosition.put(KEY_DIRECTION, direction.toString());
