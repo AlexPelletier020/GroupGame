@@ -1,35 +1,50 @@
 package base;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.groupproject.util.TileType;
 
 public class Tile {
 
-	private TileType tileType; //Replace with TileType var type
+	private TileType tileType; // Replace with TileType var type
 	private float x, y;
 	private float width, height;
-	
+	private static Texture[] tileTextures;
+	private Sprite sprite;
+
 	public Tile() {
-		this.x = -1;
-		this.y = -1;
-		this.tileType = tileType.NULL;
-		this.width = -1;
-		this.height = -1;
+		init(-1, -1, 48, 48, TileType.NULL);
 	}
 
 	public Tile(float x, float y, TileType tileType) {
-		this.x = x;
-		this.y = y;
-		this.tileType = tileType;
-		this.width = 20;
-		this.height = 20;
+		init(x, y, 48, 48, tileType);
+
 	}
-	
+
 	public Tile(float x, float y, float width, float height, TileType tileType) {
+		init(x, y, width, height, tileType);
+	}
+
+	private void init(float x, float y, float width, float height, TileType tileType) {
 		this.x = x;
 		this.y = y;
 		this.tileType = tileType;
 		this.width = width;
 		this.height = height;
+
+		initTexture();
+	}
+
+	private void initTexture() {
+		if (null == tileTextures) {
+			tileTextures = new Texture[3];
+			tileTextures[0] = new Texture("Wall.png");
+			tileTextures[1] = new Texture("Ground.png");
+			tileTextures[2] = new Texture("X.png");
+		}
+		sprite = new Sprite(tileTextures[tileType.ordinal()]);
+		sprite.setPosition(x * width, y * height);
 	}
 
 	/**
@@ -105,5 +120,9 @@ public class Tile {
 	 */
 	public void setHeight(float height) {
 		this.height = height;
+	}
+
+	public void Draw(SpriteBatch sb) {
+		sprite.draw(sb);
 	}
 }
