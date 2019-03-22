@@ -1,6 +1,6 @@
 package base;
 
-import util.TileType;
+import com.groupproject.util.TileType;
 
 public class Tile {
 
