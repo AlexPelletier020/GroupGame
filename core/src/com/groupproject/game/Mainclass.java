@@ -5,15 +5,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.groupproject.util.GameClientService;
 
 public class Mainclass extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+	GameClientService gcs;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		gcs = new GameClientService();
+		gcs.sendRequest("My potato flow around... round and round around!");
 	}
 
 	@Override

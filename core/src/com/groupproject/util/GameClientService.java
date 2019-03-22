@@ -18,7 +18,7 @@ public class GameClientService {
 
 	public GameClientService() {
 		mServerName = "127.0.0.1"; //Default IP Address and port
-		mPort = 6666;
+		mPort = 6066;
 	}
 
 	public GameClientService(String serverName, int port) {
