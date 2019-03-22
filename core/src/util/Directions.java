@@ -1,4 +1,4 @@
-package com.groupproject.util;
+package util;
 
 /**
  * @author Mohammed Al-Safwan
