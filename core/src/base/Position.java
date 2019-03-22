@@ -2,7 +2,7 @@ package base;
 
 import org.json.JSONObject;
 
-import util.Directions;
+import com.groupproject.util.Directions;
 /**
  * @author Ryan Gowan
  * @date Mar 12, 2019
