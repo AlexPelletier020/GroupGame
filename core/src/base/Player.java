@@ -156,7 +156,7 @@ public class Player {
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.name = jsonMsg.optString(KEY_NAME);
 		this.hp = jsonMsg.optFloat(KEY_HP);
-		this.position.toPosition(jsonMsg.optString(KEY_POSITION));
+		this.position.toPosition(new JSONObject(jsonMsg.optString(KEY_POSITION)));
 	}
 
 	public void Update() {

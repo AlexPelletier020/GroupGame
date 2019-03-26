@@ -65,14 +65,6 @@ public class Position {
 		this.speed = speed;
 	}
 
-	public void toPosition(String optString) {
-		JSONObject newPosition = new JSONObject(optString);
-		x = newPosition.getFloat(KEY_X);
-		y = newPosition.getFloat(KEY_Y);
-		direction = Directions.valueOf(newPosition.optString(KEY_DIRECTION, Directions.NULL.name()));
-		speed = newPosition.getFloat(KEY_SPEED);
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		// If the object is compared with itself then return true   
