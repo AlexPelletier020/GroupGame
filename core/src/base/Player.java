@@ -153,12 +153,6 @@ public class Player {
 	}
 
 	public void toPlayer(JSONObject jsonMsg) {
-		System.out.println("**********************************");
-
-		System.out.println(jsonMsg.toString());
-
-		System.out.println("**********************************");
-
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.name = jsonMsg.optString(KEY_NAME);
 		this.hp = jsonMsg.optFloat(KEY_HP);
@@ -190,7 +184,6 @@ public class Player {
 				position.setDirection(Directions.WEST);
 				position.setX(position.getX() - 10);
 			}
-			System.out.println(position.getDirection());
 			// send message to move left
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -200,7 +193,6 @@ public class Player {
 				position.setDirection(Directions.EAST);
 				position.setX(position.getX() + 10);
 			}
-			System.out.println(position.getDirection());
 
 			// send message to move right
 		}
@@ -212,7 +204,6 @@ public class Player {
 				position.setDirection(Directions.NORTH);
 				position.setY(position.getY() + 10);
 			}
-			System.out.println(position.getDirection());
 
 			// send message to move up
 		}
@@ -223,7 +214,6 @@ public class Player {
 				position.setDirection(Directions.SOUTH);
 				position.setY(position.getY() - 10);
 			}
-			System.out.println(position.getDirection());
 
 			// send message to move south
 		}

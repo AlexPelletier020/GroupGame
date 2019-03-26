@@ -104,14 +104,9 @@ public class GameClientService {
 			outToServer = client.getOutputStream();
 			out = new DataOutputStream(outToServer);
 
-			System.out.println("Sending:");
-			System.out.println(newMsg.toString());
 			out.writeUTF(newMsg.toString());
 
-			System.out.println("Trying to read from the input stream");
 			response = in.readUTF();
-			System.out.println(response);
-			System.out.println("Read inputStream");
 
 		} catch (IOException e) {
 			e.printStackTrace();
