@@ -69,7 +69,12 @@ public class Logic {
 				msg.setType(MessageType.RECEIVE_PLAYERS);
 				msg.setSender(mMainPlayer.getId() + "");
 				msg.setBody("");
-				JSONArray receivedPlayers = new JSONArray(mGCS.sendRequest(msg.toString()));
+				String receivedMsg = mGCS.sendRequest(msg.toString());
+				System.out.println("=================================================");
+				System.out.println(receivedMsg);
+				System.out.println("=================================================");
+
+				JSONArray receivedPlayers = new JSONArray();
 				for (Object playerJSON : receivedPlayers) {
 					Player newPlayer = new Player();
 					newPlayer.toPlayer(new JSONObject(playerJSON));
@@ -114,7 +119,8 @@ public class Logic {
 	public void drawPlayer(SpriteBatch mSpriteBatch) {
 		mMainPlayer.Draw(mSpriteBatch);
 		for (Player otherPlayer : mOtherPlayers) {
-			otherPlayer.Draw(mSpriteBatch);
+			if (null != otherPlayer)
+				otherPlayer.Draw(mSpriteBatch);
 		}
 	}
 
