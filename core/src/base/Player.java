@@ -156,19 +156,31 @@ public class Player {
 		System.out.println("**********************************");
 
 		System.out.println(jsonMsg.toString());
-		
+
 		System.out.println("**********************************");
 
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.name = jsonMsg.optString(KEY_NAME);
 		this.hp = jsonMsg.optFloat(KEY_HP);
+		if (null == position)
+			this.position = new Position();
 		this.position.toPosition(new JSONObject(jsonMsg.optString(KEY_POSITION)));
+	}
+
+	public void setFromOtherPlayer(Player newPlayer) {
+		this.position.setX(newPlayer.position.getX());
+		this.position.setY(newPlayer.position.getY());
+		this.position.setDirection(newPlayer.position.getDirection());
+		if (null == position)
+			this.position = new Position();
+		this.position.setSpeed(newPlayer.position.getSpeed());
+		this.hp = newPlayer.hp;
 	}
 
 	public void Update() {
 		int tilePosX = 0;
 		int tilePosY = 0;
-		
+
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			tilePosX = (int) ((position.getX() + panX) - 10) / 48;
 			tilePosY = (int) ((position.getY() + panY) / 48);
@@ -214,11 +226,10 @@ public class Player {
 			// send message to move south
 		}
 
-
 	}
 
 	public void Draw(SpriteBatch sb) {
-		if(null == sprite) {
+		if (null == sprite) {
 			sprite = new Sprite(playersTextures[id]);
 		}
 
@@ -237,17 +248,10 @@ public class Player {
 			sprite.setRotation(0);
 			break;
 		}
-		
+
 		sprite.setPosition(position.getX(), position.getY());
 
 		sprite.draw(sb);
 	}
 
-	public void setFromOtherPlayer(Player newPlayer) {
-		this.position.setX(newPlayer.position.getX());
-		this.position.setY(newPlayer.position.getY());
-		this.position.setDirection(newPlayer.position.getDirection());
-		this.position.setSpeed(newPlayer.position.getSpeed());
-		this.hp = newPlayer.hp;
-	}
 }
