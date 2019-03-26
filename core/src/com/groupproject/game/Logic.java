@@ -47,7 +47,7 @@ public class Logic {
 		mTimedSender = new Timer();
 		mTimedReciever = new Timer();
 		long delay = 1 * 1000;
-		long period = 1 * 5;
+		long period = 1 * 10;
 
 		mTimedSender.scheduleAtFixedRate(new TimerTask() {
 			@Override
