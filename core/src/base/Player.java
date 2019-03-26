@@ -168,6 +168,8 @@ public class Player {
 	}
 
 	public void setFromOtherPlayer(Player newPlayer) {
+		this.id = newPlayer.id;
+		this.name = newPlayer.name;
 		this.position.setX(newPlayer.position.getX());
 		this.position.setY(newPlayer.position.getY());
 		this.position.setDirection(newPlayer.position.getDirection());
@@ -230,7 +232,7 @@ public class Player {
 
 	public void Draw(SpriteBatch sb) {
 		if (null == sprite) {
-			sprite = new Sprite(playersTextures[id]);
+			sprite = new Sprite(playersTextures[0]);
 		}
 
 		switch (position.getDirection()) {

@@ -41,8 +41,6 @@ public class Logic {
 
 			msg.toMessage(new JSONObject(mGCS.sendRequest(msg.toString())));
 			mMainPlayer.setId(Integer.parseInt(msg.getBody()));
-
-			System.out.println("Player ID = " + mMainPlayer.getId());
 		}).start();
 
 		mOtherPlayers = new Player[7];
@@ -60,7 +58,7 @@ public class Logic {
 
 				mGCS.sendRequest(msg.toString());
 			}
-		}, 1 * 1000, 1 * 500);
+		}, 1 * 1000, 1 * 1);
 
 		mTimedReciever.schedule(new TimerTask() {
 
@@ -71,52 +69,22 @@ public class Logic {
 				msg.setSender(mMainPlayer.getId() + "");
 				msg.setBody("");
 				String receivedMsg = mGCS.sendRequest(msg.toString());
-
-				System.out.println("=================================================");
-				System.out.println(receivedMsg);
+				
 				msg.toMessage(new JSONObject(receivedMsg));
-				System.out.println("=================================================");
 
 				JSONArray receivedPlayers = new JSONArray(msg.getBody());
-				System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-				System.out.println(receivedPlayers.toString());
-				System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
 
 				for (int index = 0; index < receivedPlayers.length(); index++) {
 					Player newPlayer = new Player();
-					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-					System.out.println(receivedPlayers.getJSONObject(index));
-					JSONObject testObject = receivedPlayers.getJSONObject(index);
-					System.out.println(testObject);
-					Iterator<String> keys = testObject.keys();
-					
-					while (keys.hasNext()) {
-						String key = keys.next();
-						if (testObject.get(key) instanceof JSONObject) {
-							System.out.println("key = " + key);
-						}
-					}
-
-					System.out.println(testObject.getString("ID"));
-					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
-
-					newPlayer.toPlayer(receivedPlayers.getJSONObject(index));
+					newPlayer.toPlayer((JSONObject) receivedPlayers.get(index));
 					if (null == mOtherPlayers[newPlayer.getId()]) {
 						mOtherPlayers[newPlayer.getId()] = new Player();
 					} else {
 						mOtherPlayers[newPlayer.getId()].setFromOtherPlayer(newPlayer);
 					}
-
-					// for (int index = 0; index < mOtherPlayers.length; index++) {
-					// if (null != mOtherPlayers[index] && mOtherPlayers[index].getId() ==
-					// newPlayer.getId()) {
-					//
-					// break;
-					// }
-					// }
 				}
 			}
-		}, 1 * 1000, 1 * 500);
+		}, 1 * 1000, 1 * 1);
 	}
 
 	private void initMap() {
@@ -151,7 +119,6 @@ public class Logic {
 		for (Player otherPlayer : mOtherPlayers) {
 			if (null != otherPlayer) {
 				otherPlayer.Draw(mSpriteBatch);
-				System.out.println("other player is not null!");
 			}
 		}
 	}
