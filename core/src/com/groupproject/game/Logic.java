@@ -1,6 +1,7 @@
 package com.groupproject.game;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -59,7 +60,7 @@ public class Logic {
 
 				mGCS.sendRequest(msg.toString());
 			}
-		}, 1*1000, 1 * 500);
+		}, 1 * 1000, 1 * 500);
 
 		mTimedReciever.schedule(new TimerTask() {
 
@@ -70,6 +71,7 @@ public class Logic {
 				msg.setSender(mMainPlayer.getId() + "");
 				msg.setBody("");
 				String receivedMsg = mGCS.sendRequest(msg.toString());
+
 				System.out.println("=================================================");
 				System.out.println(receivedMsg);
 				msg.toMessage(new JSONObject(receivedMsg));
@@ -80,24 +82,41 @@ public class Logic {
 				System.out.println(receivedPlayers.toString());
 				System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
 
-				for (int index = 0 ; index< receivedPlayers.length(); index++) {
+				for (int index = 0; index < receivedPlayers.length(); index++) {
 					Player newPlayer = new Player();
-					newPlayer.toPlayer(new JSONObject(receivedPlayers.get(index)));
+					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+					System.out.println(receivedPlayers.getJSONObject(index));
+					JSONObject testObject = receivedPlayers.getJSONObject(index);
+					System.out.println(testObject);
+					Iterator<String> keys = testObject.keys();
+					
+					while (keys.hasNext()) {
+						String key = keys.next();
+						if (testObject.get(key) instanceof JSONObject) {
+							System.out.println("key = " + key);
+						}
+					}
+
+					System.out.println(testObject.getString("ID"));
+					System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+
+					newPlayer.toPlayer(receivedPlayers.getJSONObject(index));
 					if (null == mOtherPlayers[newPlayer.getId()]) {
 						mOtherPlayers[newPlayer.getId()] = new Player();
 					} else {
 						mOtherPlayers[newPlayer.getId()].setFromOtherPlayer(newPlayer);
 					}
 
-//					for (int index = 0; index < mOtherPlayers.length; index++) {
-//						if (null != mOtherPlayers[index] && mOtherPlayers[index].getId() == newPlayer.getId()) {
-//
-//							break;
-//						}
-//					}
+					// for (int index = 0; index < mOtherPlayers.length; index++) {
+					// if (null != mOtherPlayers[index] && mOtherPlayers[index].getId() ==
+					// newPlayer.getId()) {
+					//
+					// break;
+					// }
+					// }
 				}
 			}
-		}, 1*1000, 1 * 500);
+		}, 1 * 1000, 1 * 500);
 	}
 
 	private void initMap() {

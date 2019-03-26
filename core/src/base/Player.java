@@ -145,10 +145,10 @@ public class Player {
 
 	public JSONObject toJSON() {
 		JSONObject outgoingPlayer = new JSONObject();
-		outgoingPlayer.put(KEY_ID, id);
-		outgoingPlayer.put(KEY_NAME, name);
-		outgoingPlayer.put(KEY_HP, hp);
 		outgoingPlayer.put(KEY_POSITION, position.toString());
+		outgoingPlayer.put(KEY_HP, hp);
+		outgoingPlayer.put(KEY_NAME, name);
+		outgoingPlayer.put(KEY_ID, id);
 		return outgoingPlayer;
 	}
 
