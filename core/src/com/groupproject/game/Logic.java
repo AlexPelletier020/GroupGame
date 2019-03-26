@@ -1,7 +1,6 @@
 package com.groupproject.game;
 
 import java.net.URL;
-import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,6 +46,8 @@ public class Logic {
 
 		mTimedSender = new Timer();
 		mTimedReciever = new Timer();
+		long delay = 1 * 1000;
+		long period = 1 * 5;
 
 		mTimedSender.scheduleAtFixedRate(new TimerTask() {
 			@Override
@@ -58,7 +59,7 @@ public class Logic {
 
 				mGCS.sendRequest(msg.toString());
 			}
-		}, 1 * 1000, 1 * 1);
+		}, delay, period);
 
 		mTimedReciever.schedule(new TimerTask() {
 
@@ -69,7 +70,7 @@ public class Logic {
 				msg.setSender(mMainPlayer.getId() + "");
 				msg.setBody("");
 				String receivedMsg = mGCS.sendRequest(msg.toString());
-				
+
 				msg.toMessage(new JSONObject(receivedMsg));
 
 				JSONArray receivedPlayers = new JSONArray(msg.getBody());
@@ -84,7 +85,7 @@ public class Logic {
 					}
 				}
 			}
-		}, 1 * 1000, 1 * 1);
+		}, delay, period);
 	}
 
 	private void initMap() {
