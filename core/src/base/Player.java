@@ -153,6 +153,12 @@ public class Player {
 	}
 
 	public void toPlayer(JSONObject jsonMsg) {
+		System.out.println("**********************************");
+
+		System.out.println(jsonMsg.toString());
+		
+		System.out.println("**********************************");
+
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.name = jsonMsg.optString(KEY_NAME);
 		this.hp = jsonMsg.optFloat(KEY_HP);

@@ -76,9 +76,13 @@ public class Logic {
 				System.out.println("=================================================");
 
 				JSONArray receivedPlayers = new JSONArray(msg.getBody());
-				for (Object playerJSON : receivedPlayers) {
+				System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+				System.out.println(receivedPlayers.toString());
+				System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+
+				for (int index = 0 ; index< receivedPlayers.length(); index++) {
 					Player newPlayer = new Player();
-					newPlayer.toPlayer(new JSONObject(playerJSON));
+					newPlayer.toPlayer(new JSONObject(receivedPlayers.get(index)));
 					if (null == mOtherPlayers[newPlayer.getId()]) {
 						mOtherPlayers[newPlayer.getId()] = new Player();
 					} else {

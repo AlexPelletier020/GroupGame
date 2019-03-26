@@ -95,7 +95,7 @@ public class Bullet {
 	public void toBullet(JSONObject jsonMsg) {
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.reference = jsonMsg.optInt(KEY_REFERENCE);
-		this.position.toPosition(jsonMsg.optString(KEY_POSITION));
+		this.position.toPosition(new JSONObject(jsonMsg.optString(KEY_POSITION)));
 	}
 
 }
