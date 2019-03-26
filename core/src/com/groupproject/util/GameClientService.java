@@ -17,7 +17,7 @@ public class GameClientService {
 	private int mPort;
 
 	public GameClientService() {
-		mServerName = "127.0.0.1"; // Default IP Address and port
+		mServerName = "10.153.64.100"; // Default IP Address and port
 		mPort = 6066;
 	}
 
@@ -78,7 +78,7 @@ public class GameClientService {
 		// ---- --------- -----
 		// Jan 17, 2019 Mohammed Al-Safwan Initial setup
 		//
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		mPort = port;
 	}
 
@@ -90,7 +90,7 @@ public class GameClientService {
 
 		InputStream inFromServer = null;
 		DataInputStream in = null;
-		
+
 		OutputStream outToServer = null;
 		DataOutputStream out = null;
 
@@ -100,7 +100,7 @@ public class GameClientService {
 
 			inFromServer = client.getInputStream();
 			in = new DataInputStream(inFromServer);
-			
+
 			outToServer = client.getOutputStream();
 			out = new DataOutputStream(outToServer);
 
@@ -112,7 +112,6 @@ public class GameClientService {
 			response = in.readUTF();
 			System.out.println(response);
 			System.out.println("Read inputStream");
-
 
 		} catch (IOException e) {
 			e.printStackTrace();
