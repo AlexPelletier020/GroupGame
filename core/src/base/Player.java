@@ -33,10 +33,10 @@ public class Player {
 	private final String KEY_NAME = "NAME";
 
 	public Player() {
-		id = 0;
+		id = -1;
 		name = "";
 		hp = 0;
-		position = null;
+		position = new Position();
 
 	}
 

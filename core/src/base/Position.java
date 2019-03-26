@@ -3,6 +3,7 @@ package base;
 import org.json.JSONObject;
 
 import com.groupproject.util.Directions;
+import com.groupproject.util.MessageType;
 /**
  * @author Ryan Gowan
  * @date Mar 12, 2019
@@ -65,7 +66,11 @@ public class Position {
 	}
 
 	public void toPosition(String optString) {
-
+		JSONObject newPosition = new JSONObject(optString);
+		x = newPosition.getFloat(KEY_X);
+		y = newPosition.getFloat(KEY_Y);
+		direction = Directions.valueOf(newPosition.optString(KEY_DIRECTION, Directions.NULL.name()));
+		speed = newPosition.getFloat(KEY_SPEED);
 	}
 
 	@Override

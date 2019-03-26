@@ -59,7 +59,7 @@ public class Logic {
 
 				mGCS.sendRequest(msg.toString());
 			}
-		}, 2 * 1000, 1 * 500);
+		}, 1*1000, 1 * 500);
 
 		mTimedReciever.schedule(new TimerTask() {
 
@@ -72,21 +72,28 @@ public class Logic {
 				String receivedMsg = mGCS.sendRequest(msg.toString());
 				System.out.println("=================================================");
 				System.out.println(receivedMsg);
+				msg.toMessage(new JSONObject(receivedMsg));
 				System.out.println("=================================================");
 
-				JSONArray receivedPlayers = new JSONArray();
+				JSONArray receivedPlayers = new JSONArray(msg.getBody());
 				for (Object playerJSON : receivedPlayers) {
 					Player newPlayer = new Player();
 					newPlayer.toPlayer(new JSONObject(playerJSON));
-					for (int index = 0; index < mOtherPlayers.length; index++) {
-						if (null != mOtherPlayers[index] && mOtherPlayers[index].getId() == newPlayer.getId()) {
-							mOtherPlayers[index].setFromOtherPlayer(newPlayer);
-							break;
-						}
+					if (null == mOtherPlayers[newPlayer.getId()]) {
+						mOtherPlayers[newPlayer.getId()] = new Player();
+					} else {
+						mOtherPlayers[newPlayer.getId()].setFromOtherPlayer(newPlayer);
 					}
+
+//					for (int index = 0; index < mOtherPlayers.length; index++) {
+//						if (null != mOtherPlayers[index] && mOtherPlayers[index].getId() == newPlayer.getId()) {
+//
+//							break;
+//						}
+//					}
 				}
 			}
-		}, 2 * 1000, 1 * 500);
+		}, 1*1000, 1 * 500);
 	}
 
 	private void initMap() {
@@ -119,8 +126,10 @@ public class Logic {
 	public void drawPlayer(SpriteBatch mSpriteBatch) {
 		mMainPlayer.Draw(mSpriteBatch);
 		for (Player otherPlayer : mOtherPlayers) {
-			if (null != otherPlayer)
+			if (null != otherPlayer) {
 				otherPlayer.Draw(mSpriteBatch);
+				System.out.println("other player is not null!");
+			}
 		}
 	}
 
