@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,6 +24,7 @@ public class Logic {
 	public static Tile[][] mMap;
 	private GameClientService mGCS;
 	private Player mMainPlayer;
+	private Player[] mOtherPlayers;
 	private Timer mTimedSender;
 	private Timer mTimedReciever;
 
@@ -35,22 +37,51 @@ public class Logic {
 		new Thread(() -> {
 			Message msg = new Message();
 			msg.setType(MessageType.ADD_PLAYER);
-			
+
 			msg.toMessage(new JSONObject(mGCS.sendRequest(msg.toString())));
 			mMainPlayer.setId(Integer.parseInt(msg.getBody()));
-			
+
 			System.out.println("Player ID = " + mMainPlayer.getId());
 		}).start();
-		mMainPlayer = new Player(0, new Position(4 * 24.0f, 4 * 24.0f, Directions.NORTH), "Potato");
 
+		mOtherPlayers = new Player[7];
 
 		mTimedSender = new Timer();
-//		mTimedSender.scheduleAtFixedRate(new TimerTask() {
-//			@Override
-//			public void run() {
-//				mGCS.sendRequest(mMainPlayer.toString());
-//			}
-//		}, 0, 1 * 500);
+		mTimedReciever = new Timer();
+
+		mTimedSender.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				Message msg = new Message();
+				msg.setType(MessageType.UPDATE_PLAYER);
+				msg.setSender(mMainPlayer.getId() + "");
+				msg.setBody(mMainPlayer.toString());
+
+				mGCS.sendRequest(msg.toString());
+			}
+		}, 2 * 1000, 1 * 500);
+
+		mTimedReciever.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				Message msg = new Message();
+				msg.setType(MessageType.RECEIVE_PLAYERS);
+				msg.setSender(mMainPlayer.getId() + "");
+				msg.setBody("");
+				JSONArray receivedPlayers = new JSONArray(mGCS.sendRequest(msg.toString()));
+				for (Object playerJSON : receivedPlayers) {
+					Player newPlayer = new Player();
+					newPlayer.toPlayer(new JSONObject(playerJSON));
+					for (int index = 0; index < mOtherPlayers.length; index++) {
+						if (null != mOtherPlayers[index] && mOtherPlayers[index].getId() == newPlayer.getId()) {
+							mOtherPlayers[index].setFromOtherPlayer(newPlayer);
+							break;
+						}
+					}
+				}
+			}
+		}, 2 * 1000, 1 * 500);
 	}
 
 	private void initMap() {
@@ -82,10 +113,12 @@ public class Logic {
 
 	public void drawPlayer(SpriteBatch mSpriteBatch) {
 		mMainPlayer.Draw(mSpriteBatch);
+		for (Player otherPlayer : mOtherPlayers) {
+			otherPlayer.Draw(mSpriteBatch);
+		}
 	}
 
 	public void UpdatePlayer() {
 		mMainPlayer.Update();
-
 	}
 }

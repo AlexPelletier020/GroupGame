@@ -162,7 +162,7 @@ public class Player {
 	public void Update() {
 		int tilePosX = 0;
 		int tilePosY = 0;
-
+		
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			tilePosX = (int) ((position.getX() + panX) - 10) / 48;
 			tilePosY = (int) ((position.getY() + panY) / 48);
@@ -208,6 +208,14 @@ public class Player {
 			// send message to move south
 		}
 
+
+	}
+
+	public void Draw(SpriteBatch sb) {
+		if(null == sprite) {
+			sprite = new Sprite(playersTextures[id]);
+		}
+
 		switch (position.getDirection()) {
 		case NORTH:
 			sprite.setRotation(90);
@@ -223,11 +231,17 @@ public class Player {
 			sprite.setRotation(0);
 			break;
 		}
-	}
-
-	public void Draw(SpriteBatch sb) {
+		
 		sprite.setPosition(position.getX(), position.getY());
 
 		sprite.draw(sb);
+	}
+
+	public void setFromOtherPlayer(Player newPlayer) {
+		this.position.setX(newPlayer.position.getX());
+		this.position.setY(newPlayer.position.getY());
+		this.position.setDirection(newPlayer.position.getDirection());
+		this.position.setSpeed(newPlayer.position.getSpeed());
+		this.hp = newPlayer.hp;
 	}
 }

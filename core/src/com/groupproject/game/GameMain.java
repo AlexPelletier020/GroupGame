@@ -27,7 +27,7 @@ public class GameMain {
 	}
 
 	public void Control() {
-
+		//control input here
 	}
 
 	public void dispose() {
