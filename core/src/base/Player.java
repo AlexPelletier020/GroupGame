@@ -33,14 +33,14 @@ public class Player {
 	private final String KEY_NAME = "NAME";
 
 	public Player() {
-		id = -1;
-		name = "";
-		hp = 0;
-		position = new Position();
-
+		init(-1, 0, new Position(), "");
 	}
 
 	public Player(int id, Position position, String name) {
+		init(id, 100, position, name);
+	}
+
+	private void init(int id, int hp, Position position, String name) {
 		this.id = id;
 		this.name = name;
 		this.hp = 100;
@@ -54,7 +54,6 @@ public class Player {
 
 			}
 		}
-
 		sprite = new Sprite(playersTextures[id]);
 	}
 
@@ -217,6 +216,7 @@ public class Player {
 
 			// send message to move south
 		}
+		
 
 	}
 

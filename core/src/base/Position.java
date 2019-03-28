@@ -41,7 +41,13 @@ public class Position {
 		this.x = x;
 	}
 
-	public float getY() {
+	public void addX(float newX) {
+		x +=newX;
+	}
+	public void addY(float newY) {
+		y +=newY;
+	}
+public float getY() {
 		return y;
 	}
 
@@ -105,4 +111,17 @@ public class Position {
 		this.direction = Directions.valueOf(jsonMsg.getString(KEY_DIRECTION));
 		this.speed = jsonMsg.optFloat(KEY_SPEED);
 	}
+
+	
+	@Override
+	public Position clone(){
+		Position newPos = new Position();
+		newPos.x = this.x;
+		newPos.y = this.y;
+		newPos.direction = this.direction;
+		newPos.speed = this.speed;
+		return newPos;
+	}
+
+	
 }

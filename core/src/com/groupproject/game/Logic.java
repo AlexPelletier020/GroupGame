@@ -7,6 +7,8 @@ import java.util.TimerTask;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.groupproject.util.Directions;
 import com.groupproject.util.FileUtilities;
@@ -14,6 +16,8 @@ import com.groupproject.util.GameClientService;
 import com.groupproject.util.MessageType;
 import com.groupproject.util.TileType;
 
+import base.Bullet;
+import base.BulletManager;
 import base.Message;
 import base.Player;
 import base.Position;
@@ -27,7 +31,9 @@ public class Logic {
 	private Player[] mOtherPlayers;
 	private Timer mTimedSender;
 	private Timer mTimedReciever;
-
+	private BulletManager mBM;
+	
+	
 	public Logic() {
 
 		initMap();
@@ -43,12 +49,13 @@ public class Logic {
 		}).start();
 
 		mOtherPlayers = new Player[7];
-
+		mBM = new BulletManager();
 		mTimedSender = new Timer();
 		mTimedReciever = new Timer();
 		long delay = 1 * 1000;
 		long period = 1 * 10;
-
+		
+		//Send Player
 		mTimedSender.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
@@ -60,7 +67,8 @@ public class Logic {
 				mGCS.sendRequest(msg.toString());
 			}
 		}, delay, period);
-
+		
+		//
 		mTimedReciever.schedule(new TimerTask() {
 
 			@Override
@@ -122,9 +130,18 @@ public class Logic {
 				otherPlayer.Draw(mSpriteBatch);
 			}
 		}
+		
+		mBM.draw(mSpriteBatch);
 	}
 
 	public void UpdatePlayer() {
+		if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
+		{
+			Bullet newBullet = new Bullet(mMainPlayer.getId(), mMainPlayer.getPosition().clone());
+			newBullet.getPosition().setSpeed(15);
+			mBM.addToMyBullet(newBullet);
+		}
+		mBM.update();
 		mMainPlayer.Update();
 	}
 }
