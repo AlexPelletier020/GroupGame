@@ -45,7 +45,7 @@ public class Logic {
 
 		initMap();
 		mGCS = new GameClientService();
-		mMainPlayer = new Player(0, new Position(4 * 24.0f, 4 * 24.0f, Directions.NORTH), "Potato");
+		mMainPlayer = new Player(0, new Position(3 * 24.0f, 3 * 24.0f, Directions.NORTH), "Potato");
 
 		new Thread(() -> {
 			Message msg = new Message();
@@ -131,7 +131,7 @@ public class Logic {
 		int col;
 		for (int row = 0; row < mMap.length; row++) {
 			for (col = 0; col < mMap[0].length; col++) {
-				mMap[col][row] = new Tile(col, row, TileType.fromInteger(Integer.parseInt(charMap[col][row] + "")));
+				mMap[row][col] = new Tile(row, col, TileType.fromInteger(Integer.parseInt(charMap[row][col] + "")));
 			}
 		}
 	}
@@ -140,7 +140,7 @@ public class Logic {
 		int col;
 		for (int row = 0; row < mMap.length; row++) {
 			for (col = 0; col < mMap[0].length; col++) {
-				mMap[col][row].Draw(mSpriteBatch);
+				mMap[row][col].Draw(mSpriteBatch);
 			}
 		}
 
