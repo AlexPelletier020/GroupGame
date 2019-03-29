@@ -54,7 +54,7 @@ public class Player {
 
 			}
 		}
-		sprite = new Sprite(playersTextures[id]);
+		sprite = new Sprite(playersTextures[0]);
 	}
 
 	/**
