@@ -28,6 +28,8 @@ public class Bullet implements Comparable<Bullet> {
 	private static final int panX = 24;
 	private static final int panY = 24;;
 
+	private static boolean wasTextureCreated = false;
+
 	public Bullet() {
 		init(-1, new Position());
 	}
@@ -45,10 +47,10 @@ public class Bullet implements Comparable<Bullet> {
 		this.position.addY(panY);
 		this.creationDate = new Date();
 
-		if (!Thread.currentThread().getName().equals("LWJGL Application"))
-			if (null == bulletTexture)
-				bulletTexture = new Texture("shot.png");
-
+		if (!wasTextureCreated && null == bulletTexture) {
+			bulletTexture = new Texture("shot.png");
+			wasTextureCreated = true;
+		}
 		sprite = new Sprite(bulletTexture);
 	}
 
