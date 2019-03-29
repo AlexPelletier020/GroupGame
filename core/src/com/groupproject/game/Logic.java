@@ -32,9 +32,14 @@ public class Logic {
 	private Timer mTimedSender;
 	private Timer mTimedReciever;
 	private BulletManager mBM;
-	
-	
+
+	private float elapsedtime;
+	private float timeStep;
+
 	public Logic() {
+
+		elapsedtime = Gdx.graphics.getDeltaTime();
+		timeStep = 60.f / 60.f;
 
 		initMap();
 		mGCS = new GameClientService();
@@ -54,7 +59,7 @@ public class Logic {
 		mTimedReciever = new Timer();
 		long delay = 1 * 1000;
 		long period = 1 * 10;
-		
+
 		//Send Player
 		mTimedSender.scheduleAtFixedRate(new TimerTask() {
 			@Override
@@ -67,7 +72,7 @@ public class Logic {
 				mGCS.sendRequest(msg.toString());
 			}
 		}, delay, period);
-		
+
 		//
 		mTimedReciever.schedule(new TimerTask() {
 
@@ -130,18 +135,55 @@ public class Logic {
 				otherPlayer.Draw(mSpriteBatch);
 			}
 		}
-		
+
 		mBM.draw(mSpriteBatch);
 	}
 
 	public void UpdatePlayer() {
-		if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
-		{
+		bulletUpdate();
+		mBM.update();
+		mMainPlayer.Update();
+	}
+
+	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	// Method				:	void bulletUpdate()
+	//
+	// Method parameters	:	args - the method permits String command line parameters to be entered
+	//
+	// Method return		:	void
+	//
+	// Synopsis				:   
+	//							
+	//
+	// Modifications		:
+	//							Date			    Developer				Notes
+	//							  ----			      ---------			 	     -----
+	//							Mar 29, 2019		    Mohammed Al-Safwan				Initial setup
+	//
+	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	private boolean canShoot = true;
+
+	private void bulletUpdate() {
+		if (!canShoot && elapsedtime > timeStep) {
+
+			//			while (elapsedtime >= timeStep) {
+			//				elapsedtime = elapsedtime - timeStep;
+			//			}
+//			if (elapsedtime >= timeStep) {
+//				elapsedtime = 0;
+//			}
+			//Do your thing
+			canShoot = true;
+		} else {
+			elapsedtime += Gdx.graphics.getDeltaTime();
+		}
+
+		if (canShoot && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			Bullet newBullet = new Bullet(mMainPlayer.getId(), mMainPlayer.getPosition().clone());
 			newBullet.getPosition().setSpeed(15);
 			mBM.addToMyBullet(newBullet);
+			canShoot = false;
+			elapsedtime = 0;
 		}
-		mBM.update();
-		mMainPlayer.Update();
 	}
 }

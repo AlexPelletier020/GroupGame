@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.groupproject.game.Logic;
 
-public class Bullet {
+public class Bullet implements Comparable<Bullet> {
 
 	private static int idCounter;
 	private int id;
@@ -117,12 +117,11 @@ public class Bullet {
 	public boolean Update() {
 		int tilePosX = (int) ((position.getX())) / 48;
 		int tilePosY = (int) ((position.getY())) / 48;
-		
-		if (Logic.mMap[tilePosX][tilePosY].getTileType().ordinal() == 0)
-		{
+
+		if (Logic.mMap[tilePosX][tilePosY].getTileType().ordinal() == 0) {
 			return false;
 		}
-		
+
 		switch (position.getDirection()) {
 
 		case NORTH:
@@ -141,7 +140,7 @@ public class Bullet {
 			position.setX(position.getX() - position.getSpeed());
 			break;
 		}
-		
+
 		return true;
 
 	}
@@ -170,6 +169,14 @@ public class Bullet {
 		sprite.setPosition(position.getX(), position.getY());
 
 		sprite.draw(sb);
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Bullet bulletToCompare) {
+		return this.creationDate.compareTo(bulletToCompare.creationDate);
 	}
 
 }

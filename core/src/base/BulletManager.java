@@ -13,7 +13,8 @@ public class BulletManager {
 	private ArrayList<Bullet> mMyBullets;
 	private ArrayList<Bullet> mOtherBullets;
 	private Date mLastBulletRecievedDate;
-
+	private BulletService mBS;
+	
 	public BulletManager() {
 		mMyBullets = new ArrayList<>();
 		mOtherBullets = new ArrayList<>();

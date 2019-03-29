@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.groupproject.util.Directions;
 import com.groupproject.util.MessageType;
+
 /**
  * @author Ryan Gowan
  * @date Mar 12, 2019
@@ -18,8 +19,8 @@ public class Position {
 	private final String KEY_Y = "y";
 	private final String KEY_DIRECTION = "direction";
 	private final String KEY_SPEED = "speed";
-	
-	public Position(){
+
+	public Position() {
 		x = 0;
 		y = 0;
 		direction = Directions.NULL;
@@ -42,12 +43,14 @@ public class Position {
 	}
 
 	public void addX(float newX) {
-		x +=newX;
+		x += newX;
 	}
+
 	public void addY(float newY) {
-		y +=newY;
+		y += newY;
 	}
-public float getY() {
+
+	public float getY() {
 		return y;
 	}
 
@@ -112,9 +115,8 @@ public float getY() {
 		this.speed = jsonMsg.optFloat(KEY_SPEED);
 	}
 
-	
 	@Override
-	public Position clone(){
+	public Position clone() {
 		Position newPos = new Position();
 		newPos.x = this.x;
 		newPos.y = this.y;
@@ -123,5 +125,4 @@ public float getY() {
 		return newPos;
 	}
 
-	
 }
