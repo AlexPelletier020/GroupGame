@@ -30,11 +30,13 @@ public class Logic {
 	private Player mMainPlayer;
 	private Player[] mOtherPlayers;
 	private Timer mTimedSender;
-	private Timer mTimedReciever;
+	private Timer mTimedReceiver;
 	private BulletManager mBM;
 
 	private float elapsedtime;
 	private float timeStep;
+
+	private boolean canShoot = true;
 
 	public Logic() {
 
@@ -54,9 +56,9 @@ public class Logic {
 		}).start();
 
 		mOtherPlayers = new Player[7];
-		mBM = new BulletManager();
+		mBM = new BulletManager(mGCS);
 		mTimedSender = new Timer();
-		mTimedReciever = new Timer();
+		mTimedReceiver = new Timer();
 		long delay = 1 * 1000;
 		long period = 1 * 10;
 
@@ -73,11 +75,28 @@ public class Logic {
 			}
 		}, delay, period);
 
-		//
-		mTimedReciever.schedule(new TimerTask() {
+		//Receive Everything
+		mTimedReceiver.schedule(new TimerTask() {
 
 			@Override
 			public void run() {
+				getAllPlayers();
+				getAllBullets();
+			}
+
+			private void getAllBullets() {
+				Message msg = new Message();
+				msg.setType(MessageType.RECEIVE_BULLETS);
+				msg.setSender(mMainPlayer.getId() + "");
+				msg.setBody(mBM.mLastBulletRecievedDate.getTime() + "");
+
+				String receivedMsg = mGCS.sendRequest(msg.toString());
+				msg.toMessage(new JSONObject(receivedMsg));
+				mBM.addToOthersBullets(new JSONArray(msg.getBody()));
+			}
+
+			private void getAllPlayers() {
+
 				Message msg = new Message();
 				msg.setType(MessageType.RECEIVE_PLAYERS);
 				msg.setSender(mMainPlayer.getId() + "");
@@ -118,7 +137,6 @@ public class Logic {
 	}
 
 	public void drawMap(SpriteBatch mSpriteBatch) {
-
 		int col;
 		for (int row = 0; row < mMap.length; row++) {
 			for (col = 0; col < mMap[0].length; col++) {
@@ -145,33 +163,31 @@ public class Logic {
 		mMainPlayer.Update();
 	}
 
-	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	// Method				:	void bulletUpdate()
-	//
-	// Method parameters	:	args - the method permits String command line parameters to be entered
-	//
-	// Method return		:	void
-	//
-	// Synopsis				:   
-	//							
-	//
-	// Modifications		:
-	//							Date			    Developer				Notes
-	//							  ----			      ---------			 	     -----
-	//							Mar 29, 2019		    Mohammed Al-Safwan				Initial setup
-	//
-	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	private boolean canShoot = true;
-
 	private void bulletUpdate() {
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		// Method				:	void bulletUpdate()
+		//
+		// Method parameters	:	args - the method permits String command line parameters to be entered
+		//
+		// Method return		:	void
+		//
+		// Synopsis				:   
+		//							
+		//
+		// Modifications		:
+		//							Date			    Developer				Notes
+		//							  ----			      ---------			 	     -----
+		//							Mar 29, 2019		    Mohammed Al-Safwan				Initial setup
+		//
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		if (!canShoot && elapsedtime > timeStep) {
 
 			//			while (elapsedtime >= timeStep) {
 			//				elapsedtime = elapsedtime - timeStep;
 			//			}
-//			if (elapsedtime >= timeStep) {
-//				elapsedtime = 0;
-//			}
+			//			if (elapsedtime >= timeStep) {
+			//				elapsedtime = 0;
+			//			}
 			//Do your thing
 			canShoot = true;
 		} else {
@@ -186,4 +202,5 @@ public class Logic {
 			elapsedtime = 0;
 		}
 	}
+
 }

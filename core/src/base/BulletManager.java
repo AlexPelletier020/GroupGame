@@ -7,18 +7,20 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.groupproject.util.GameClientService;
 
 public class BulletManager {
 
 	private ArrayList<Bullet> mMyBullets;
 	private ArrayList<Bullet> mOtherBullets;
-	private Date mLastBulletRecievedDate;
+	public Date mLastBulletRecievedDate;
 	private BulletService mBS;
 	
-	public BulletManager() {
+	public BulletManager( GameClientService gcs) {
 		mMyBullets = new ArrayList<>();
 		mOtherBullets = new ArrayList<>();
 		mLastBulletRecievedDate = new Date();
+		mBS = new BulletService(gcs);
 	}
 
 	public void update() {
@@ -65,7 +67,7 @@ public class BulletManager {
 		return allBullets;
 	}
 
-	public JSONArray getOtherBulletsToString() {
+	synchronized public JSONArray getOtherBulletsToString() {
 		JSONArray allBullets = new JSONArray();
 		for (Bullet bullet : mOtherBullets) {
 			allBullets.put(bullet.toJSON());
@@ -75,12 +77,13 @@ public class BulletManager {
 
 	public void addToMyBullet(Bullet newBullet) {
 		mMyBullets.add(newBullet);
+		mBS.uploadBullet(newBullet);
 	}
 
 	/**
 	 * Don't forget to start drawing the bullets asap.
 	 **/
-	public void addToOthersBullets(JSONArray othersBullets) {
+	synchronized public void addToOthersBullets(JSONArray othersBullets) {
 		for (int index = 0; index < othersBullets.length(); index++) {
 			// Create bullet from JSON
 			Bullet incomingBullet = new Bullet();
