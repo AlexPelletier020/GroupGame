@@ -96,7 +96,7 @@ public class BulletManager {
 
 			// Check if the date of this new bullet is newer than my current date. if yes,
 			// then change to the new date.
-			if (incomingBullet.getCreationDate().getTime() > mLastBulletRecievedDate.getTime())
+			if (incomingBullet.getCreationDate().after(mLastBulletRecievedDate))
 				mLastBulletRecievedDate = incomingBullet.getCreationDate();
 		}
 	}
