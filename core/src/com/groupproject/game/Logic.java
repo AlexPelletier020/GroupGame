@@ -39,7 +39,6 @@ public class Logic {
 	private boolean canShoot = true;
 
 	public Logic() {
-
 		elapsedtime = Gdx.graphics.getDeltaTime();
 		timeStep = 60.f / 60.f;
 

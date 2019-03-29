@@ -45,9 +45,9 @@ public class Bullet implements Comparable<Bullet> {
 		this.position.addY(panY);
 		this.creationDate = new Date();
 
-		if (null == bulletTexture) {
-			bulletTexture = new Texture("shot.png");
-		}
+		if (!Thread.currentThread().getName().equals("LWJGL Application"))
+			if (null == bulletTexture)
+				bulletTexture = new Texture("shot.png");
 
 		sprite = new Sprite(bulletTexture);
 	}
