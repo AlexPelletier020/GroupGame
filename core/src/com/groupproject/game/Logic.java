@@ -39,6 +39,7 @@ public class Logic {
 	private boolean canShoot = true;
 
 	public Logic() {
+		System.out.println("The name of the main thread is >>>>>> " + Thread.currentThread().getName());
 		elapsedtime = Gdx.graphics.getDeltaTime();
 		timeStep = 60.f / 60.f;
 

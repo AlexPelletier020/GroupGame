@@ -47,11 +47,13 @@ public class Bullet implements Comparable<Bullet> {
 		this.position.addY(panY);
 		this.creationDate = new Date();
 
-		if (!wasTextureCreated && null == bulletTexture) {
-			bulletTexture = new Texture("shot.png");
-			wasTextureCreated = true;
+		if (Thread.currentThread().getName().equals("LWJGL Application")) {
+			if (!wasTextureCreated && null == bulletTexture) {
+				bulletTexture = new Texture("shot.png");
+				wasTextureCreated = true;
+			}
+			sprite = new Sprite(bulletTexture);
 		}
-		sprite = new Sprite(bulletTexture);
 	}
 
 	public int getId() {
@@ -148,6 +150,11 @@ public class Bullet implements Comparable<Bullet> {
 	}
 
 	public void Draw(SpriteBatch sb) {
+		if (!wasTextureCreated && null == bulletTexture) {
+			bulletTexture = new Texture("shot.png");
+			wasTextureCreated = true;
+		}
+
 		if (null == sprite) {
 			sprite = new Sprite(bulletTexture);
 		}
