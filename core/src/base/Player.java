@@ -18,7 +18,7 @@ public class Player {
 
 	private int tilePosX = 0;
 	private int tilePosY = 0;
-	
+
 	private int id;
 	private String name;
 	private float hp;
@@ -41,14 +41,6 @@ public class Player {
 
 	public Player(int id, Position position, String name) {
 		init(id, 100, position, name);
-	}
-
-	private void init(int id, int hp, Position position, String name) {
-		this.id = id;
-		this.name = name;
-		this.hp = 100;
-		this.position = position;
-
 		if (null == playersTextures) {
 			playersTextures = new Texture[8];
 
@@ -57,7 +49,15 @@ public class Player {
 
 			}
 		}
-		sprite = new Sprite(playersTextures[0]);
+		if (id != -1)
+			sprite = new Sprite(playersTextures[id]);
+	}
+
+	private void init(int id, int hp, Position position, String name) {
+		this.id = id;
+		this.name = name;
+		this.hp = 100;
+		this.position = position;
 	}
 
 	/**
@@ -73,6 +73,7 @@ public class Player {
 	 */
 	public void setId(int id) {
 		this.id = id;
+		sprite = new Sprite(playersTextures[id]);
 	}
 
 	/**
@@ -176,7 +177,6 @@ public class Player {
 	}
 
 	public void Update() {
-		
 
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			position.setDirection(Directions.WEST);
@@ -213,12 +213,11 @@ public class Player {
 
 			// send message to move south
 		}
-		
 
 	}
-	public void calculateTilePos()
-	{
-		switch(position.getDirection()) {
+
+	public void calculateTilePos() {
+		switch (position.getDirection()) {
 		case NORTH:
 			tilePosX = (int) ((position.getX() + panX)) / 48;
 			tilePosY = (int) (((position.getY() + panY) + 24) / 48);
@@ -236,11 +235,12 @@ public class Player {
 			tilePosY = (int) ((position.getY() + panY) / 48);
 			break;
 		}
-		
+
 	}
+
 	public void Draw(SpriteBatch sb) {
 		if (null == sprite) {
-			sprite = new Sprite(playersTextures[0]);
+			sprite = new Sprite(playersTextures[id]);
 		}
 
 		switch (position.getDirection()) {
@@ -272,7 +272,8 @@ public class Player {
 	}
 
 	/**
-	 * @param tilePosX the tilePosX to set
+	 * @param tilePosX
+	 *            the tilePosX to set
 	 */
 	public void setTilePosX(int tilePosX) {
 		this.tilePosX = tilePosX;
@@ -286,7 +287,8 @@ public class Player {
 	}
 
 	/**
-	 * @param tilePosY the tilePosY to set
+	 * @param tilePosY
+	 *            the tilePosY to set
 	 */
 	public void setTilePosY(int tilePosY) {
 		this.tilePosY = tilePosY;
@@ -300,7 +302,8 @@ public class Player {
 	}
 
 	/**
-	 * @param sprite the sprite to set
+	 * @param sprite
+	 *            the sprite to set
 	 */
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
