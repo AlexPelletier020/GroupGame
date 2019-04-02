@@ -8,8 +8,11 @@ import org.json.JSONObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
+import java.util.Random;
+
+import com.groupproject.game.Logic;
 import com.groupproject.util.GameClientService;
+import com.groupproject.util.TileType;
 
 public class BulletManager {
 
@@ -38,7 +41,7 @@ public class BulletManager {
 						if (!mMyBullets.isEmpty() && null != mMyBullets.get(index)
 								&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
 							mMyBullets.remove(index);
-							
+
 						}
 					}
 				}
@@ -51,9 +54,17 @@ public class BulletManager {
 			} else {
 				if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
 					mOtherBullets.remove(index);
-					mainPlayer.getPosition().setX(960);
-					mainPlayer.getPosition().setY(540);
-					
+					Random killme = new Random();
+					killme.setSeed(new Date().getTime());
+					float xPos = 48.0f + (killme.nextFloat() * 48.0f * 36.0f);
+					float yPos = 48.0f + (killme.nextFloat() * 48.0f * 20.0f);
+					while (Logic.mMap[(int) yPos][(int) xPos].getTileType() != TileType.WALL) {
+						xPos = 48.0f + (killme.nextFloat() * 48.0f * 36.0f);
+						yPos = 48.0f + (killme.nextFloat() * 48.0f * 20.0f);
+					}
+					mainPlayer.getPosition().setX(xPos);
+					mainPlayer.getPosition().setY(yPos);
+
 				}
 			}
 		}
