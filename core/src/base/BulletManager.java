@@ -30,15 +30,16 @@ public class BulletManager {
 				mMyBullets.remove(index);
 				// removeMyBullets.add(mMyBullets.get(index));
 			} else {
-				for (int playerIndex = otherPlayers.length - 1; playerIndex >= 0; playerIndex--) {
-					if (null != otherPlayers[playerIndex]) {
-						otherPlayers[playerIndex].calculateTilePos();
-						if (null != mMyBullets.get(index)
-								&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
-							mMyBullets.remove(index);
+				if (!mMyBullets.isEmpty())
+					for (int playerIndex = otherPlayers.length - 1; playerIndex >= 0; playerIndex--) {
+						if (null != otherPlayers[playerIndex]) {
+							otherPlayers[playerIndex].calculateTilePos();
+							if (null != mMyBullets.get(index)
+									&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
+								mMyBullets.remove(index);
+							}
 						}
 					}
-				}
 			}
 		}
 		for (int index = mOtherBullets.size() - 1; index >= 0; index--) {
