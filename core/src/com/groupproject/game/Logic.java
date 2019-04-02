@@ -61,6 +61,7 @@ public class Logic {
 		mTimedReceiver = new Timer();
 		long delay = 1 * 1000;
 		long period = 1 * 10;
+		long lag = 1 * 5;
 
 		//Send Player
 		mTimedSender.scheduleAtFixedRate(new TimerTask() {
@@ -117,7 +118,7 @@ public class Logic {
 					}
 				}
 			}
-		}, delay, period);
+		}, delay + lag, period);
 	}
 
 	private void initMap() {
