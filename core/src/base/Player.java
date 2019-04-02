@@ -179,40 +179,35 @@ public class Player {
 		
 
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			tilePosX = (int) ((position.getX() + panX) - 10) / 48;
-			tilePosY = (int) ((position.getY() + panY) / 48);
+			position.setDirection(Directions.WEST);
+			calculateTilePos();
 			if (Logic.mMap[tilePosX][tilePosY].getTileType().ordinal() != 0) {
-				position.setDirection(Directions.WEST);
 				position.setX(position.getX() - 10);
 			}
 			// send message to move left
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			tilePosX = (int) ((position.getX() + panX) + 24) / 48;
-			tilePosY = (int) ((position.getY() + panY) / 48);
+			position.setDirection(Directions.EAST);
+			calculateTilePos();
 			if (Logic.mMap[tilePosX][tilePosY].getTileType().ordinal() != 0) {
-				position.setDirection(Directions.EAST);
 				position.setX(position.getX() + 10);
 			}
 
 			// send message to move right
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			tilePosX = (int) ((position.getX() + panX)) / 48;
-			tilePosY = (int) (((position.getY() + panY) + 24) / 48);
-
+			position.setDirection(Directions.NORTH);
+			calculateTilePos();
 			if (Logic.mMap[tilePosX][tilePosY].getTileType().ordinal() != 0) {
-				position.setDirection(Directions.NORTH);
 				position.setY(position.getY() + 10);
 			}
 
 			// send message to move up
 		}
 		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			tilePosX = (int) ((position.getX() + panX)) / 48;
-			tilePosY = (int) (((position.getY() + panY) - 10) / 48);
+			position.setDirection(Directions.SOUTH);
+			calculateTilePos();
 			if (Logic.mMap[tilePosX][tilePosY].getTileType().ordinal() != 0) {
-				position.setDirection(Directions.SOUTH);
 				position.setY(position.getY() - 10);
 			}
 
@@ -221,7 +216,28 @@ public class Player {
 		
 
 	}
-
+	public void calculateTilePos()
+	{
+		switch(position.getDirection()) {
+		case NORTH:
+			tilePosX = (int) ((position.getX() + panX)) / 48;
+			tilePosY = (int) (((position.getY() + panY) + 24) / 48);
+			break;
+		case SOUTH:
+			tilePosX = (int) ((position.getX() + panX)) / 48;
+			tilePosY = (int) (((position.getY() + panY) - 10) / 48);
+			break;
+		case WEST:
+			tilePosX = (int) ((position.getX() + panX) - 10) / 48;
+			tilePosY = (int) ((position.getY() + panY) / 48);
+			break;
+		case EAST:
+			tilePosX = (int) ((position.getX() + panX) + 24) / 48;
+			tilePosY = (int) ((position.getY() + panY) / 48);
+			break;
+		}
+		
+	}
 	public void Draw(SpriteBatch sb) {
 		if (null == sprite) {
 			sprite = new Sprite(playersTextures[0]);

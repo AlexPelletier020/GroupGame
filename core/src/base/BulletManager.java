@@ -31,6 +31,7 @@ public class BulletManager {
 				// removeMyBullets.add(mMyBullets.get(index));
 			} else {
 				for (int playerIndex = otherPlayers.length - 1; playerIndex >= 0; playerIndex--) {
+					otherPlayers[playerIndex].calculateTilePos();
 					if (null != mMyBullets.get(index) 
 							&& null != otherPlayers[playerIndex]
 							&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
@@ -48,8 +49,6 @@ public class BulletManager {
 					mOtherBullets.remove(index);
 				}
 			}
-
-
 		}
 		// for (Bullet bullet : mOtherBullets) {
 		// if (!bullet.Update()) {
