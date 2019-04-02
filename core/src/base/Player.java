@@ -49,8 +49,7 @@ public class Player {
 
 			}
 		}
-		if (id != -1)
-			sprite = new Sprite(playersTextures[id]);
+		sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
 	}
 
 	private void init(int id, int hp, Position position, String name) {
@@ -73,7 +72,7 @@ public class Player {
 	 */
 	public void setId(int id) {
 		this.id = id;
-		sprite = new Sprite(playersTextures[id]);
+		sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
 	}
 
 	/**

@@ -57,14 +57,14 @@ public class BulletManager {
 					mOtherBullets.remove(index);
 
 					float xPos = 0;
-					float yPos =0;
+					float yPos = 0;
 					do {
 						xPos = (killme.nextFloat() * 48.0f * Logic.mMap.length);
 						yPos = (killme.nextFloat() * 48.0f * Logic.mMap[0].length);
 					} while ((Logic.mMap[(int) (xPos / 48)][(int) (yPos / 48)].getTileType() == TileType.WALL));
-					
-					mainPlayer.getPosition().setX(xPos);
-					mainPlayer.getPosition().setY(yPos);
+
+					mainPlayer.getPosition().setX(xPos - 24);
+					mainPlayer.getPosition().setY(yPos - 24);
 
 				}
 			}
