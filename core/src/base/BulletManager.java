@@ -56,8 +56,8 @@ public class BulletManager {
 				if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
 					mOtherBullets.remove(index);
 
-					float xPos = 48.0f + (killme.nextFloat() * 48.0f * Logic.mMap.length);
-					float yPos = 48.0f + (killme.nextFloat() * 48.0f * Logic.mMap[0].length);
+					float xPos = (killme.nextFloat() * 48.0f * Logic.mMap.length);
+					float yPos = (killme.nextFloat() * 48.0f * Logic.mMap[0].length);
 					while (Logic.mMap[(int) (xPos / 48)][(int) (yPos / 48)].getTileType() != TileType.WALL) {
 						xPos = 48.0f + (killme.nextFloat() * 48.0f * Logic.mMap.length);
 						yPos = 48.0f + (killme.nextFloat() * 48.0f * Logic.mMap[0].length);
