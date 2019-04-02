@@ -31,7 +31,8 @@ public class BulletManager {
 				// removeMyBullets.add(mMyBullets.get(index));
 			} else {
 				for (int playerIndex = otherPlayers.length - 1; playerIndex >= 0; playerIndex--) {
-					if (null != mMyBullets.get(index) && null != otherPlayers[playerIndex]
+					if (null != mMyBullets.get(index) 
+							&& null != otherPlayers[playerIndex]
 							&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
 						mMyBullets.remove(index);
 					}
@@ -42,10 +43,12 @@ public class BulletManager {
 			if (!mOtherBullets.get(index).Update()) {
 				mOtherBullets.remove(index);
 				// removeMyBullets.add(mMyBullets.get(index));
+			}else {
+				if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
+					mOtherBullets.remove(index);
+				}
 			}
-			if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
-				mOtherBullets.remove(index);
-			}
+
 
 		}
 		// for (Bullet bullet : mOtherBullets) {
