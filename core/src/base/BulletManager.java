@@ -15,16 +15,15 @@ public class BulletManager {
 	private ArrayList<Bullet> mOtherBullets;
 	public Date mLastBulletRecievedDate;
 	private BulletService mBS;
-	
-	public BulletManager( GameClientService gcs) {
+
+	public BulletManager(GameClientService gcs) {
 		mMyBullets = new ArrayList<>();
 		mOtherBullets = new ArrayList<>();
 		mLastBulletRecievedDate = new Date();
 		mBS = new BulletService(gcs);
 	}
 
-	public void update() {
-	
+	public void update(Player mainPlayer) {
 
 		for (int index = mMyBullets.size() - 1; index >= 0; index--) {
 			if (!mMyBullets.get(index).Update()) {
@@ -37,6 +36,8 @@ public class BulletManager {
 			if (!mOtherBullets.get(index).Update()) {
 				mOtherBullets.remove(index);
 				// removeMyBullets.add(mMyBullets.get(index));
+			} else if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
+				mOtherBullets.remove(index);
 			}
 
 		}
@@ -52,6 +53,7 @@ public class BulletManager {
 	synchronized public void draw(SpriteBatch sb) {
 		for (Bullet bullet : mMyBullets) {
 			bullet.Draw(sb);
+
 		}
 
 		for (Bullet bullet : mOtherBullets) {

@@ -16,6 +16,9 @@ import com.groupproject.util.Directions;
  */
 public class Player {
 
+	private int tilePosX = 0;
+	private int tilePosY = 0;
+	
 	private int id;
 	private String name;
 	private float hp;
@@ -173,8 +176,7 @@ public class Player {
 	}
 
 	public void Update() {
-		int tilePosX = 0;
-		int tilePosY = 0;
+		
 
 		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			tilePosX = (int) ((position.getX() + panX) - 10) / 48;
@@ -244,6 +246,48 @@ public class Player {
 		sprite.setPosition(position.getX(), position.getY());
 
 		sprite.draw(sb);
+	}
+
+	/**
+	 * @return the tilePosX
+	 */
+	public int getTilePosX() {
+		return tilePosX;
+	}
+
+	/**
+	 * @param tilePosX the tilePosX to set
+	 */
+	public void setTilePosX(int tilePosX) {
+		this.tilePosX = tilePosX;
+	}
+
+	/**
+	 * @return the tilePosY
+	 */
+	public int getTilePosY() {
+		return tilePosY;
+	}
+
+	/**
+	 * @param tilePosY the tilePosY to set
+	 */
+	public void setTilePosY(int tilePosY) {
+		this.tilePosY = tilePosY;
+	}
+
+	/**
+	 * @return the sprite
+	 */
+	public Sprite getSprite() {
+		return sprite;
+	}
+
+	/**
+	 * @param sprite the sprite to set
+	 */
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
 	}
 
 }

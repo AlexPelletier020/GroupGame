@@ -16,7 +16,10 @@ public class Bullet implements Comparable<Bullet> {
 	private int reference;
 	private Position position;
 	private Date creationDate;
+	
 
+	private int tilePosX = 0;
+	private int tilePosY = 0 ;
 	private static Texture bulletTexture;
 	private Sprite sprite;
 
@@ -112,6 +115,34 @@ public class Bullet implements Comparable<Bullet> {
 		return outgoingBullet;
 	}
 
+	/**
+	 * @return the tilePosX
+	 */
+	public int getTilePosX() {
+		return tilePosX;
+	}
+
+	/**
+	 * @param tilePosX the tilePosX to set
+	 */
+	public void setTilePosX(int tilePosX) {
+		this.tilePosX = tilePosX;
+	}
+
+	/**
+	 * @return the tilePosY
+	 */
+	public int getTilePosY() {
+		return tilePosY;
+	}
+
+	/**
+	 * @param tilePosY the tilePosY to set
+	 */
+	public void setTilePosY(int tilePosY) {
+		this.tilePosY = tilePosY;
+	}
+	
 	public void toBullet(JSONObject jsonMsg) {
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.reference = jsonMsg.optInt(KEY_REFERENCE);
@@ -120,8 +151,8 @@ public class Bullet implements Comparable<Bullet> {
 	}
 
 	public boolean Update() {
-		int tilePosX = (int) ((position.getX())) / 48;
-		int tilePosY = (int) ((position.getY())) / 48;
+		tilePosX = (int) ((position.getX())) / 48;
+		tilePosY = (int) ((position.getY())) / 48;
 
 		if (Logic.mMap[tilePosX][tilePosY].getTileType().ordinal() == 0) {
 			return false;
@@ -149,6 +180,27 @@ public class Bullet implements Comparable<Bullet> {
 		return true;
 
 	}
+	public boolean collisionCheck(Player mainPlayer) {
+		if(tilePosX == mainPlayer.getTilePosX() && tilePosY == mainPlayer.getTilePosY())
+		{
+			return true;
+		}else {
+			return false;
+		}
+	}
+//	public int Update(Player thePlayer) {
+//		int result = 0;
+//		if(Update()) {
+//			result = 0;
+//		}else {
+//			//collision with player here 
+//			//-collided with player 
+//			//- result = 1
+//			// else 
+//			//- result = 2
+//		}
+//		return result;
+//	}
 
 	public void Draw(SpriteBatch sb) {
 		if (!wasTextureCreated && null == bulletTexture) {
