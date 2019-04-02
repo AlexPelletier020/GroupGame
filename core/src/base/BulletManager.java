@@ -58,7 +58,7 @@ public class BulletManager {
 
 					float xPos = (killme.nextFloat() * 48.0f * Logic.mMap.length);
 					float yPos = (killme.nextFloat() * 48.0f * Logic.mMap[0].length);
-					while (Logic.mMap[(int) (xPos / 48)][(int) (yPos / 48)].getTileType() != TileType.WALL) {
+					while (Logic.mMap[(int) (xPos / 48)][(int) (yPos / 48)].getTileType() == TileType.WALL) {
 						xPos =(killme.nextFloat() * 48.0f * Logic.mMap.length);
 						yPos =(killme.nextFloat() * 48.0f * Logic.mMap[0].length);
 					}
