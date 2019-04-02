@@ -38,13 +38,13 @@ public class Logic {
 
 	private boolean canShoot = true;
 
-	public Logic() {
+	public Logic(String serverIP, String port) {
 		System.out.println("The name of the main thread is >>>>>> " + Thread.currentThread().getName());
 		elapsedtime = Gdx.graphics.getDeltaTime();
 		timeStep = 60.f / 60.f;
 
 		initMap();
-		mGCS = new GameClientService();
+		mGCS = new GameClientService(serverIP, Integer.parseInt(port));
 		mMainPlayer = new Player(0, new Position(3 * 24.0f, 3 * 24.0f, Directions.NORTH), "Potato");
 
 		new Thread(() -> {
@@ -164,30 +164,8 @@ public class Logic {
 	}
 
 	private void bulletUpdate() {
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-		// Method				:	void bulletUpdate()
-		//
-		// Method parameters	:	args - the method permits String command line parameters to be entered
-		//
-		// Method return		:	void
-		//
-		// Synopsis				:   
-		//							
-		//
-		// Modifications		:
-		//							Date			    Developer				Notes
-		//							  ----			      ---------			 	     -----
-		//							Mar 29, 2019		    Mohammed Al-Safwan				Initial setup
-		//
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		if (!canShoot && elapsedtime > timeStep) {
 
-			//			while (elapsedtime >= timeStep) {
-			//				elapsedtime = elapsedtime - timeStep;
-			//			}
-			//			if (elapsedtime >= timeStep) {
-			//				elapsedtime = 0;
-			//			}
 			//Do your thing
 			canShoot = true;
 		} else {

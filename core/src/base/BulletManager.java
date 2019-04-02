@@ -49,7 +49,7 @@ public class BulletManager {
 		// mOtherBullets.removeAll(removeOtherBullets);
 	}
 
-	public void draw(SpriteBatch sb) {
+	synchronized public void draw(SpriteBatch sb) {
 		for (Bullet bullet : mMyBullets) {
 			bullet.Draw(sb);
 		}

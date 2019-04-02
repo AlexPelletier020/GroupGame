@@ -37,6 +37,11 @@ public class Bullet implements Comparable<Bullet> {
 	public Bullet(int PID, Position startPos) {
 		this.idCounter++;
 		init(PID, startPos);
+		if (!wasTextureCreated && null == bulletTexture) {
+			bulletTexture = new Texture("shot.png");
+			wasTextureCreated = true;
+		}
+		sprite = new Sprite(bulletTexture);
 	}
 
 	private void init(int PID, Position startPos) {
@@ -47,13 +52,9 @@ public class Bullet implements Comparable<Bullet> {
 		this.position.addY(panY);
 		this.creationDate = new Date();
 
-		if (Thread.currentThread().getName().equals("LWJGL Application")) {
-			if (!wasTextureCreated && null == bulletTexture) {
-				bulletTexture = new Texture("shot.png");
-				wasTextureCreated = true;
-			}
-			sprite = new Sprite(bulletTexture);
-		}
+		//		if (Thread.currentThread().getName().equals("LWJGL Application")) {
+		//
+		//		}
 	}
 
 	public int getId() {
