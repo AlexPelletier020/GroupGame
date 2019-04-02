@@ -240,7 +240,7 @@ public class Player {
 
 	public void Draw(SpriteBatch sb) {
 		if (null == sprite) {
-			sprite = new Sprite(playersTextures[id]);
+			sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
 		}
 
 		switch (position.getDirection()) {
