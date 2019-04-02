@@ -181,6 +181,7 @@ public class Bullet implements Comparable<Bullet> {
 
 	}
 	public boolean collisionCheck(Player mainPlayer) {
+		
 		if(tilePosX == mainPlayer.getTilePosX() && tilePosY == mainPlayer.getTilePosY())
 		{
 			return true;

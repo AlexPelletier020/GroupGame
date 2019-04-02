@@ -29,13 +29,14 @@ public class BulletManager {
 			if (!mMyBullets.get(index).Update()) {
 				mMyBullets.remove(index);
 				// removeMyBullets.add(mMyBullets.get(index));
-			}
-			for (Player otherPlayer : otherPlayers) {
-				 if (mMyBullets.get(index).collisionCheck(otherPlayer)) {
-					 mMyBullets.remove(index);
+			} else {
+				for (int playerIndex = otherPlayers.length - 1; playerIndex >= 0; playerIndex--) {
+					if (null != mMyBullets.get(index) && null != otherPlayers[playerIndex]
+							&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
+						mMyBullets.remove(index);
 					}
+				}
 			}
-
 		}
 		for (int index = mOtherBullets.size() - 1; index >= 0; index--) {
 			if (!mOtherBullets.get(index).Update()) {
