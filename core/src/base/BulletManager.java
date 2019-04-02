@@ -6,7 +6,9 @@ import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
 import com.groupproject.util.GameClientService;
 
 public class BulletManager {
@@ -36,6 +38,7 @@ public class BulletManager {
 						if (!mMyBullets.isEmpty() && null != mMyBullets.get(index)
 								&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
 							mMyBullets.remove(index);
+							
 						}
 					}
 				}
@@ -48,6 +51,9 @@ public class BulletManager {
 			} else {
 				if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
 					mOtherBullets.remove(index);
+					mainPlayer.getPosition().setX(960);
+					mainPlayer.getPosition().setY(540);
+					
 				}
 			}
 		}
