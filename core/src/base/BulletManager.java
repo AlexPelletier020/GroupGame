@@ -23,12 +23,17 @@ public class BulletManager {
 		mBS = new BulletService(gcs);
 	}
 
-	public void update(Player mainPlayer) {
+	public void update(Player mainPlayer, Player[] otherPlayers) {
 
 		for (int index = mMyBullets.size() - 1; index >= 0; index--) {
 			if (!mMyBullets.get(index).Update()) {
 				mMyBullets.remove(index);
 				// removeMyBullets.add(mMyBullets.get(index));
+			}
+			for (Player otherPlayer : otherPlayers) {
+				 if (mMyBullets.get(index).collisionCheck(otherPlayer)) {
+					 mMyBullets.remove(index);
+					}
 			}
 
 		}
@@ -36,7 +41,8 @@ public class BulletManager {
 			if (!mOtherBullets.get(index).Update()) {
 				mOtherBullets.remove(index);
 				// removeMyBullets.add(mMyBullets.get(index));
-			} else if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
+			}
+			if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
 				mOtherBullets.remove(index);
 			}
 

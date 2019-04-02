@@ -161,7 +161,7 @@ public class Logic {
 	public void UpdatePlayer() {
 		bulletUpdate();
 		mMainPlayer.Update();
-		mBM.update(mMainPlayer);
+		mBM.update(mMainPlayer, mOtherPlayers);
 		
 	}
 
