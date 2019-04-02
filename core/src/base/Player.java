@@ -156,6 +156,7 @@ public class Player {
 
 	public void toPlayer(JSONObject jsonMsg) {
 		this.id = jsonMsg.optInt(KEY_ID);
+		sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
 		this.name = jsonMsg.optString(KEY_NAME);
 		this.hp = jsonMsg.optFloat(KEY_HP);
 		if (null == position)
