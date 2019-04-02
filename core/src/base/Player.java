@@ -166,6 +166,7 @@ public class Player {
 
 	public void setFromOtherPlayer(Player newPlayer) {
 		this.id = newPlayer.id;
+		sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
 		this.name = newPlayer.name;
 		this.position.setX(newPlayer.position.getX());
 		this.position.setY(newPlayer.position.getY());
