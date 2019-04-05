@@ -1,6 +1,5 @@
 package com.groupproject.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -11,15 +10,7 @@ public class GameMain {
 
 	public GameMain() {
 		mSpriteBatch = new SpriteBatch();
-		//		mLogic = new Logic(JOptionPane.showInputDialog("Enter IP:","10.153.64.66"),
-		//				JOptionPane.showInputDialog("Port:","6066"));
-		//		String tempIP;
-		//		String tempPort;
-		//		MyTextInputListener listener = new MyTextInputListener();
-		//		Gdx.input.getTextInput(listener, "Enter IP", "10.153.64.66", "");
-		//		tempIP = listener.getText();
-		//		Gdx.input.getTextInput(listener, "Enter Port", "6066", "");
-		//		tempPort = listener.getText();
+
 		mLogic = new Logic("10.153.64.66", "6066");
 
 	}
@@ -31,9 +22,16 @@ public class GameMain {
 
 	public void Draw() {
 		mSpriteBatch.begin();
+		if(mLogic.isGameOver)
+		{
+			//Draw game over screen
+			
+		}
+		else {
+			mLogic.drawMap(mSpriteBatch);
+			mLogic.drawPlayer(mSpriteBatch);
+		}
 
-		mLogic.drawMap(mSpriteBatch);
-		mLogic.drawPlayer(mSpriteBatch);
 		mSpriteBatch.end();
 	}
 

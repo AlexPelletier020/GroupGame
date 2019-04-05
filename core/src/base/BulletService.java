@@ -1,6 +1,6 @@
 package base;
 
-import java.util.Date;
+import org.json.JSONArray;
 
 import com.groupproject.util.GameClientService;
 import com.groupproject.util.MessageType;
@@ -17,22 +17,6 @@ public class BulletService {
 		this.mGCS = gcs;
 	}
 
-	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-	// Method				:	void uploadBullet()
-	//
-	// Method parameters	:	args - the method permits String command line parameters to be entered
-	//
-	// Method return		:	void
-	//
-	// Synopsis				:   
-	//							
-	//
-	// Modifications		:
-	//							Date			    Developer				Notes
-	//							  ----			      ---------			 	     -----
-	//							Mar 29, 2019		    Mohammed Al-Safwan				Initial setup
-	//
-	// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	public void uploadBullet(Bullet newBullet) {
 		Message bulletMsg = new Message();
 		bulletMsg.setType(MessageType.SEND_BULLET);
@@ -41,4 +25,11 @@ public class BulletService {
 		mGCS.sendRequest(bulletMsg.toString());
 	}
 
+	public void bulletKilledPlayer(int playerID, int bulletOwnerID) {
+		Message killerBulletMsg = new Message();
+		killerBulletMsg.setType(MessageType.KILLER_BULLET);
+		killerBulletMsg.setSender(playerID + "");
+		killerBulletMsg.setBody(bulletOwnerID + "");
+		mGCS.sendRequest(killerBulletMsg.toString());
+	}
 }

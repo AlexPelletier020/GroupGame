@@ -26,6 +26,9 @@ import base.Tile;
 public class Logic {
 
 	public static Tile[][] mMap;
+	public boolean isGameOver = false;
+	public String mTop3Players;
+	
 	private GameClientService mGCS;
 	private Player mMainPlayer;
 	private Player[] mOtherPlayers;
@@ -72,7 +75,16 @@ public class Logic {
 				msg.setSender(mMainPlayer.getId() + "");
 				msg.setBody(mMainPlayer.toString());
 
-				mGCS.sendRequest(msg.toString());
+				String receivedMsg = mGCS.sendRequest(msg.toString());
+				JSONObject jRecivedMsg = new JSONObject(receivedMsg);
+				msg.toMessage(jRecivedMsg);
+
+				//return and end the game
+				if (msg.getType() == MessageType.GAME_OVER) {
+					isGameOver = true;
+					mTop3Players = msg.getBody();
+					return;
+				}
 			}
 		}, delay, period);
 
@@ -92,7 +104,16 @@ public class Logic {
 				msg.setBody(mBM.mLastBulletRecievedDate.getTime() + "");
 
 				String receivedMsg = mGCS.sendRequest(msg.toString());
-				msg.toMessage(new JSONObject(receivedMsg));
+				JSONObject jRecivedMsg = new JSONObject(receivedMsg);
+				msg.toMessage(jRecivedMsg);
+
+				//return and end the game
+				if (msg.getType() == MessageType.GAME_OVER) {
+					isGameOver = true;
+					mTop3Players = msg.getBody();
+					return;
+				}
+
 				mBM.addToOthersBullets(new JSONArray(msg.getBody()));
 			}
 
@@ -102,9 +123,17 @@ public class Logic {
 				msg.setType(MessageType.RECEIVE_PLAYERS);
 				msg.setSender(mMainPlayer.getId() + "");
 				msg.setBody("");
-				String receivedMsg = mGCS.sendRequest(msg.toString());
 
-				msg.toMessage(new JSONObject(receivedMsg));
+				String receivedMsg = mGCS.sendRequest(msg.toString());
+				JSONObject jRecivedMsg = new JSONObject(receivedMsg);
+				msg.toMessage(jRecivedMsg);
+
+				//return and end the game
+				if (msg.getType() == MessageType.GAME_OVER) {
+					isGameOver = true;
+					mTop3Players = msg.getBody();
+					return;
+				}
 
 				JSONArray receivedPlayers = new JSONArray(msg.getBody());
 
@@ -162,7 +191,7 @@ public class Logic {
 		bulletUpdate();
 		mMainPlayer.Update();
 		mBM.update(mMainPlayer, mOtherPlayers);
-		
+
 	}
 
 	private void bulletUpdate() {

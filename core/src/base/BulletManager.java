@@ -33,29 +33,32 @@ public class BulletManager {
 
 		for (int index = mMyBullets.size() - 1; index >= 0; index--) {
 			if (!mMyBullets.get(index).Update()) {
+				//Remove bullet
 				mMyBullets.remove(index);
-				// removeMyBullets.add(mMyBullets.get(index));
 			} else {
 				for (int playerIndex = otherPlayers.length - 1; playerIndex >= 0; playerIndex--) {
 					if (null != otherPlayers[playerIndex]) {
 						otherPlayers[playerIndex].calculateTilePos();
 						if (!mMyBullets.isEmpty() && null != mMyBullets.get(index)
 								&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
+							//Remove bullet
 							mMyBullets.remove(index);
-
 						}
 					}
 				}
 			}
 		}
+		
 		for (int index = mOtherBullets.size() - 1; index >= 0; index--) {
 			if (!mOtherBullets.get(index).Update()) {
 				mOtherBullets.remove(index);
-				// removeMyBullets.add(mMyBullets.get(index));
 			} else {
 				if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
+					//Remove bullet
 					mOtherBullets.remove(index);
-
+					//Send player died
+					mBS.bulletKilledPlayer(mainPlayer.getId(), mOtherBullets.get(index).getReference());
+					//Spawn player
 					float xPos = 0;
 					float yPos = 0;
 					do {
