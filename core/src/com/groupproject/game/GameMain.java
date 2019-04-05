@@ -1,11 +1,7 @@
 package com.groupproject.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import base.Player;
 
@@ -68,21 +64,4 @@ public class GameMain {
 		// img.dispose();
 	}
 
-	private class MyTextInputListener implements TextInputListener {
-
-		private String finalText;
-
-		@Override
-		public void input(String text) {
-			finalText = text;
-		}
-
-		public String getText() {
-			return finalText;
-		}
-
-		@Override
-		public void canceled() {
-		}
-	}
 }
