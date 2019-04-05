@@ -122,7 +122,4 @@ Thumbs.db
 !/ios-moe/xcode/*.xcodeproj/xcshareddata
 !/ios-moe/xcode/*.xcodeproj/project.pbxproj
 /ios-moe/xcode/native/
-core/src/base/MainPlayer.java
-core/src/base/PlayerData.java
-core/src/base/UserInterface.java
-core/assets/Button.png
+

@@ -30,48 +30,55 @@ public class BulletManager {
 	}
 
 	public void update(Player mainPlayer, Player[] otherPlayers) {
-
-		for (int index = mMyBullets.size() - 1; index >= 0; index--) {
-			if (!mMyBullets.get(index).Update()) {
-				//Remove bullet
-				mMyBullets.remove(index);
-			} else {
-				for (int playerIndex = otherPlayers.length - 1; playerIndex >= 0; playerIndex--) {
-					if (null != otherPlayers[playerIndex]) {
-						otherPlayers[playerIndex].calculateTilePos();
-						if (!mMyBullets.isEmpty() && null != mMyBullets.get(index)
-								&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
-							//Remove bullet
-							mMyBullets.remove(index);
+		try {
+			for (int index = mMyBullets.size() - 1; index >= 0; index--) {
+				if (!mMyBullets.get(index).Update()) {
+					//Remove bullet
+					mMyBullets.remove(index);
+				} else {
+					for (int playerIndex = otherPlayers.length - 1; playerIndex >= 0; playerIndex--) {
+						if (null != otherPlayers[playerIndex]) {
+							otherPlayers[playerIndex].calculateTilePos();
+							if (!mMyBullets.isEmpty() && null != mMyBullets.get(index)
+									&& mMyBullets.get(index).collisionCheck(otherPlayers[playerIndex])) {
+								//Remove bullet
+								mMyBullets.remove(index);
+							}
 						}
 					}
 				}
 			}
-		}
 
-		for (int index = mOtherBullets.size() - 1; index >= 0; index--) {
-			if (!mOtherBullets.get(index).Update()) {
-				mOtherBullets.remove(index);
-			} else {
-				if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
-					//Send player died
-					mBS.bulletKilledPlayer(mainPlayer.getId(), mOtherBullets.get(index).getReference());
-					//Remove bullet
+			for (int index = mOtherBullets.size() - 1; index >= 0; index--) {
+				if (!mOtherBullets.get(index).Update()) {
 					mOtherBullets.remove(index);
-					//Spawn player
-					float xPos = 0;
-					float yPos = 0;
-					do {
-						xPos = (killme.nextFloat() * 48.0f * Logic.mMap.length);
-						yPos = (killme.nextFloat() * 48.0f * Logic.mMap[0].length);
-					} while ((Logic.mMap[(int) (xPos / 48)][(int) (yPos / 48)].getTileType() == TileType.WALL));
+				} else {
+					if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
+						//Send player died
+						mBS.bulletKilledPlayer(mainPlayer.getId(), mOtherBullets.get(index).getReference());
+						//Remove bullet
+						mOtherBullets.remove(index);
+						//Spawn player
+						float xPos = 0;
+						float yPos = 0;
+						do {
+							xPos = (killme.nextFloat() * 48.0f * Logic.mMap.length);
+							yPos = (killme.nextFloat() * 48.0f * Logic.mMap[0].length);
+						} while ((Logic.mMap[(int) (xPos / 48)][(int) (yPos / 48)].getTileType() == TileType.WALL));
 
-					mainPlayer.getPosition().setX(xPos - 24);
-					mainPlayer.getPosition().setY(yPos - 24);
+						mainPlayer.getPosition().setX(xPos - 24);
+						mainPlayer.getPosition().setY(yPos - 24);
 
+					}
 				}
 			}
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("removed a bullet out of Index: ");
+			for(Bullet b: mMyBullets) {
+				System.out.println(b.toPrettyString());
+			}
 		}
+
 		// for (Bullet bullet : mOtherBullets) {
 		// if (!bullet.Update()) {
 		// removeOtherBullets.add(bullet);
