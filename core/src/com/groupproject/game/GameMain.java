@@ -48,14 +48,14 @@ public class GameMain {
 	private String resolvePlayer(String winnerID) {
 		if (mLogic.getMainPlayer().getId() == Integer.parseInt(winnerID))
 			return mLogic.getMainPlayer().getName();
-		
+
 		Player[] otherPlayers = mLogic.getOtherPlayers();
-		for(Player player: otherPlayers) {
-			if(player.getId() == Integer.parseInt(winnerID)) {
+		for (Player player : otherPlayers) {
+			if (null != player && player.getId() == Integer.parseInt(winnerID)) {
 				return player.getName();
 			}
 		}
-		
+
 		return "Someone";
 	}
 
