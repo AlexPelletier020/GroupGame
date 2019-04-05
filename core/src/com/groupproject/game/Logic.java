@@ -37,6 +37,7 @@ public class Logic {
 	private BulletManager mBM;
 
 	private float elapsedtime;
+	
 	private float timeStep;
 
 	private boolean canShoot = true;
