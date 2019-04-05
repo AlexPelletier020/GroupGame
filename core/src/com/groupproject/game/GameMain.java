@@ -10,10 +10,11 @@ public class GameMain {
 	private Logic mLogic;
 	private BitmapFont font = new BitmapFont();
 	private String[] topThreeChar;
+
 	public GameMain() {
 		mSpriteBatch = new SpriteBatch();
-		
-		mLogic = new Logic("10.153.64.66", "6066");
+
+		mLogic = new Logic("10.153.64.100", "6066");
 
 	}
 
@@ -24,18 +25,16 @@ public class GameMain {
 
 	public void Draw() {
 		mSpriteBatch.begin();
-		
-		if(mLogic.isGameOver)
-		{
+
+		if (mLogic.isGameOver) {
 			topThreeChar = mLogic.mTop3Players.split(" ");
 			font.draw(mSpriteBatch, "Player " + topThreeChar[0] + ": " + topThreeChar[1], 985, 700);
 			font.draw(mSpriteBatch, "Player " + topThreeChar[2] + ": " + topThreeChar[3], 985, 600);
 			font.draw(mSpriteBatch, "Player " + topThreeChar[4] + ": " + topThreeChar[5], 985, 500);
-			
+
 			//Draw game over screen
-			
-		}
-		else {
+
+		} else {
 			mLogic.drawMap(mSpriteBatch);
 			mLogic.drawPlayer(mSpriteBatch);
 		}

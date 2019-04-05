@@ -48,16 +48,16 @@ public class BulletManager {
 				}
 			}
 		}
-		
+
 		for (int index = mOtherBullets.size() - 1; index >= 0; index--) {
 			if (!mOtherBullets.get(index).Update()) {
 				mOtherBullets.remove(index);
 			} else {
 				if (mOtherBullets.get(index).collisionCheck(mainPlayer)) {
-					//Remove bullet
-					mOtherBullets.remove(index);
 					//Send player died
 					mBS.bulletKilledPlayer(mainPlayer.getId(), mOtherBullets.get(index).getReference());
+					//Remove bullet
+					mOtherBullets.remove(index);
 					//Spawn player
 					float xPos = 0;
 					float yPos = 0;
