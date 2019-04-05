@@ -7,10 +7,19 @@ import com.badlogic.gdx.graphics.GL20;
 public class Mainclass extends ApplicationAdapter {
 
 	private GameMain mGm;
+	private String mIPAddress;
+	private String mPort;
+	private String mPlayerName;
+
+	public Mainclass(String ipAddress, String port, String playerName) {
+		mIPAddress = ipAddress;
+		mPort = port;
+		mPlayerName = playerName;
+	}
 
 	@Override
 	public void create() {
-		mGm = new GameMain();
+		mGm = new GameMain(mIPAddress, mPort, mPlayerName);
 	}
 
 	@Override

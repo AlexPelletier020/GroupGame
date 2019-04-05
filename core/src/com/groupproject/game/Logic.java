@@ -42,14 +42,14 @@ public class Logic {
 
 	private boolean canShoot = true;
 
-	public Logic(String serverIP, String port) {
+	public Logic(String serverIP, String port, String playerName) {
 		System.out.println("The name of the main thread is >>>>>> " + Thread.currentThread().getName());
 		elapsedtime = Gdx.graphics.getDeltaTime();
 		timeStep = 60.f / 60.f;
 
 		initMap();
 		mGCS = new GameClientService(serverIP, Integer.parseInt(port));
-		mMainPlayer = new Player(0, new Position(3 * 24.0f, 3 * 24.0f, Directions.NORTH), "Potato");
+		mMainPlayer = new Player(0, new Position(3 * 24.0f, 3 * 24.0f, Directions.NORTH), playerName);
 
 		new Thread(() -> {
 			Message msg = new Message();
@@ -211,6 +211,31 @@ public class Logic {
 			canShoot = false;
 			elapsedtime = 0;
 		}
+	}
+
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		// Method				:	boolean getMainPlayer()
+		//
+		// Method parameters	:	args - the method permits String command line parameters to be entered
+		//
+		// Method return		:	boolean
+		//
+		// Synopsis				:   
+		//							
+		//
+		// Modifications		:
+		//							Date			    Developer				Notes
+		//							  ----			      ---------			 	     -----
+		//							Apr 5, 2019		    Mohammed Al-Safwan				Initial setup
+		//
+		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+	
+	public Player getMainPlayer() {
+		return mMainPlayer;
+	}
+
+	public Player[] getOtherPlayers() {
+		return mOtherPlayers;
 	}
 
 }
