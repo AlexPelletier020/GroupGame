@@ -46,10 +46,9 @@ public class Player {
 
 			for (int index = 0; index < 8; index++) {
 				playersTextures[index] = new Texture("Player" + index + ".png");
-
 			}
 		}
-		sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
+		sprite = new Sprite(playersTextures[(id < 0) ? 0 : id%7]);
 	}
 
 	private void init(int id, int hp, Position position, String name) {
@@ -72,7 +71,7 @@ public class Player {
 	 */
 	public void setId(int id) {
 		this.id = id;
-		sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
+		sprite = new Sprite(playersTextures[(id < 0) ? 0 : id%7]);
 	}
 
 	/**
@@ -156,7 +155,7 @@ public class Player {
 
 	public void toPlayer(JSONObject jsonMsg) {
 		this.id = jsonMsg.optInt(KEY_ID);
-		sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
+		sprite = new Sprite(playersTextures[(id < 0) ? 0 : id%7]);
 		this.name = jsonMsg.optString(KEY_NAME);
 		this.hp = jsonMsg.optFloat(KEY_HP);
 		if (null == position)
@@ -166,7 +165,7 @@ public class Player {
 
 	public void setFromOtherPlayer(Player newPlayer) {
 		this.id = newPlayer.id;
-		sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
+		sprite = new Sprite(playersTextures[(id < 0) ? 0 : id%7]);
 		this.name = newPlayer.name;
 		this.position.setX(newPlayer.position.getX());
 		this.position.setY(newPlayer.position.getY());
@@ -241,7 +240,7 @@ public class Player {
 
 	public void Draw(SpriteBatch sb) {
 		if (null == sprite) {
-			sprite = new Sprite(playersTextures[(id < 0 || id > 7) ? 0 : id]);
+			sprite = new Sprite(playersTextures[(id < 0) ? 0 : id%7]);
 		}
 
 		switch (position.getDirection()) {
